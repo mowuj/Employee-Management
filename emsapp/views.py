@@ -29,6 +29,7 @@ def create_user(request):
         except:
             if password==con_password:
                 user=User.objects.create_user(username=username,password=password)
+                # employee=Employee.objects.create()
                 if user:
                     return redirect('/')
         else:
@@ -98,3 +99,7 @@ def edit_profile(request,id):
             return redirect('/profile')
     context = {'form':form}
     return render (request,'edit-profile.html',context)
+def delete(request):
+    remove=Employee.objects.get(id=id)
+    remove=remove.delete()
+    return('/all-employee')

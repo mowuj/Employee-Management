@@ -60,7 +60,7 @@ All employee
                     <td>{{i.post}}</td>
                     <td>{{i.phone}}</td>
                     <td>{{i.department}}</td>
-                    <td> <a href="">
+                    <td> <a href="{% url 'delete' i.id %}">
                             <button type="button" class="btn btn-danger">X</button>
                         </a></td>
                     </td>
