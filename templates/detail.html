@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    {% for i in detail %}
+
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Employee Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        <td>User Name: {{ i.username |title}}</td>
+                        <br>
+                        <td>Employee Id: {{ i.employee_id }}</td>
+                        <br>
+                        <td>Post: {{ i.post.name }}</td>
+                        <br>
+                        <td>Salary: {{ i.salary }}</td>
+                        <br>
+
+                    </tr>
+                </tbody>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Employee Photo
+            </div>
+            <div class="card-body">
+
+                <img class="center" style="width:150px;height:150px;" src="{{i.image.url}}" alt="">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i> Personal Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        <td>Full Name: {{ i.name }}</td>
+                        <br>
+                        <td>NID : {{ i.nid }}</td>
+                        <br>
+                        <td>Contact Number: {{ i.phone }}</td>
+                        <br>
+                        <td>Email Address: {{ i.email }}</td>
+                        <br>
+                        <td>Father Name: {{ i.father_name }}</td>
+                        <br>
+                        <td>Mother Name: {{ i.mother_name }}</td>
+                        <br>
+                        <td>District: {{ i.district.name }}</td>
+                        <br>
+                    </tr>
+                </tbody>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-align-justify"></i>Academic Info
+            </div>
+            <div class="card-body">
+                <tbody>
+                    <tr>
+                        <td>S.S.C: {{ i.ssc }}</td>
+                        <br>
+                        <td>H.S.C: {{ i.hsc }}</td>
+                        <br>
+                        <td>Honor's: {{ i.honors }}</td>
+                        <br>
+                        <td>Masters's: {{ i.masters }}</td>
+                        <br>
+                    </tr>
+                </tbody>
+
+            </div>
+
+        </div>
+        <a href="{% url 'profile-edit' i.id %}"> <button type="button"
+                class="btn btn-outline-primary badge-pill ">Edit</button></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}

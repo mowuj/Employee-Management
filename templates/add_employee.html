@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+<!-- {% load crispy_forms_tags %} -->
+{% block title %}
+<title>Add Employee</title>
+{% endblock title %}
+{% block body %}
+<section>
+    <div class="row mb-5 mt-5">
+        <div class="col-md-6 m-auto  badge-info text-center p-2 badge-pill">
+            <h4>Add Some Employee Information</h4>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6 m-auto">
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock body %}

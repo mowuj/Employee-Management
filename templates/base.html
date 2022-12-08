@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<!--Headers-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Circle Fintech">
+    <meta name="keyword" content="">
+
+    <title>My Company</title>
+
+    <!-- Icons -->
+    <link href="{% static 'dist/vendors/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'dist/vendors/css/simple-line-icons.min.css' %}" rel="stylesheet">
+
+    <!-- Main styles for this application -->
+    <link href="{% static 'dist/css/style.css' %}" rel="stylesheet">
+
+
+</head>
+
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+    <!--Navbar-->
+    <header class="app-header navbar">
+        <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <ul class="nav navbar-nav d-md-down-none">
+            <li class="nav-item px-3">
+                <a class="nav-link" href="#">Settings</a>
+            </li>
+            <li class="nav-item px-3">
+                <b>
+                    <a class="nav-link disabled" href="#">Time - {% now "h:i A" %}</a>
+                </b>
+
+            </li>
+            <li class="nav-item px-3">
+                <b>
+                    <a class="nav-link disabled" href="#">Today - {% now "D jS N Y" %}</a>
+                </b>
+
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+            <li>
+                <span><i> Wellcome</i> &nbsp;<b><i>{{request.user|title}}</i></b> &nbsp;</span>
+            </li>
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+
+                    <img style="width:40px;height:40px;" src="" class="img-avatar"
+                        alt="admin@bootstrapmaster.com">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header text-center">
+                        <strong>Account</strong>
+                    </div>
+                    <a class="dropdown-item" href=""><i class="fa fa-bell-o"></i> Meetings<span
+                            class="badge badge-info">{{meet}}</span></a>
+                    <div class="dropdown-header text-center">
+                        <strong>Settings</strong>
+                    </div>
+                    <a class="dropdown-item" href=""><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href=""><i class="fa fa-user"></i>User
+                        Details</a>
+                    <a class="dropdown-item" href=""><i class="fa fa-wrench"></i> Settings</a>
+
+                    <a class="dropdown-item" href=""><i class="fa fa-lock"></i> Logout</a>
+                </div>
+            </li>
+        </ul>
+        <button class="navbar-toggler aside-menu-toggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </header>
+
+    <div class="app-body">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href=""><i class="icon-speedometer"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Employee</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'all-employee' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Employee List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="nav-icon icon-puzzle"></i> Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="nav-icon icon-puzzle"></i> Attendance Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Registration</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Client</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Client List</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Create Client</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user "></i> Task</a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Add Task</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Daily Task</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Leave</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Leave Form</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> New Application</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> My Application</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Govt Holiday</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Meeting</a>
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Create Meeting</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Today Meeting</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+
+
+        </div>
+
+
+        <!-- Main content -->
+        <main class="main">
+
+            <!-- Breadcrumb -->
+            <ol class="breadcrumb">
+
+                <!-- <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item"><a href="#">Admin</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+         -->
+                <!-- Breadcrumb Menu-->
+                <li class="breadcrumb-menu d-md-down-none">
+                    <div class="btn-group" role="group" aria-label="Button group">
+                        <a class="btn" href="#"><i class="icon-speech"></i></a>
+                        <a class="btn" href=""><i class="icon-graph"></i> &nbsp;Dashboard</a>
+                        <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+                    </div>
+                </li>
+
+
+            </ol>
+
+            <!-- Page contents -->
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    {% block body %}
+
+                    {% endblock body %}
+                </div>
+
+            </div>
+            <!-- /.conainer-fluid -->
+        </main>
+
+
+        <!--Aside bar-->
+        <aside class="aside-menu">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><i
+                            class="icon-list"></i></a>
+                </li>
+                <!--        <li class="nav-item">-->
+                <!--            <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="icon-settings"></i></a>-->
+                <!--        </li>-->
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="timeline" role="tabpanel">
+                    <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
+                        <small><b>Todays Meeting</b></small>
+                    </div>
+                    
+                    <hr class="transparent mx-3 my-0">
+                    <div class="callout callout-warning m-0 py-3">
+                        <div class="avatar float-right">
+
+                        </div>
+
+
+
+                        <div>Meeting with
+                            <strong></strong>
+                        </div>
+                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; </small>
+                        <small class="text-muted"><i class="icon-calendar"></i>&nbsp; </small>
+                    </div>
+                    
+
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+
+    <!--Footer-->
+    <footer class="app-footer">
+        <span><a href="#">My Company</a> © 2022</span>
+        <span class="ml-auto">Powered by <a href="#">My Company</a></span>
+
+
+        <!--JS-->
+        <!-- Bootstrap and necessary plugins -->
+        <script src="{% static 'dist/vendors/js/jquery.min.js' %}"></script>
+        <script src="{% static 'dist/vendors/js/popper.min.js' %}"></script>
+        <script src="{% static 'dist/vendors/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'dist/vendors/js/pace.min.js' %}"></script>
+
+        <!-- Plugins and scripts required by all views -->
+        <!--Chart JS is commented out due to console errors-->
+        <!--<script src="{% static 'dist/vendors/js/Chart.min.js' %}"></script>-->
+
+        <!-- CoreUI main scripts -->
+
+        <script src="{% static 'dist/js/app.js' %}"></script>
+
+        <!-- Plugins and scripts required by this views -->
+
+        <!-- Custom scripts required by this view -->
+        <script src="{% static 'dist/js/views/main.js' %}"></script>
+        <script src="{% static 'custom.js' %}"></script>
+
+
+
+
+</body>
+
+</html>
