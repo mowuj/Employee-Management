@@ -14,34 +14,49 @@ from datetime import date
 def home(request):
     return render(request,'home.html')
 
-def create_user(request):
-    if request.method=="POST":
-        username=request.POST['username']
-        password = request.POST['password']
-        con_password = request.POST['con_password']
-        try:
-            user=User.objects.get(username=username)
-            if user:
-                msg="This username already taken"
-                context={'msg':msg}
-                return render(request,'signup.html',context)
+# def create_user(request):
+#     if request.method=="POST":
+#         username=request.POST['username']
+#         password = request.POST['password']
+#         con_password = request.POST['con_password']
+#         try:
+#             user=User.objects.get(username=username)
+#             if user:
+#                 msg="This username already taken"
+#                 context={'msg':msg}
+#                 return render(request,'signup.html',context)
 
-        except:
-            if password==con_password:
-                user=User.objects.create_user(username=username,password=password)
-                # employee=Employee.objects.create()
-                if user:
-                    return redirect('/')
-        else:
-            msg='Password does not matched'
-            context={'msg':msg}
-            return redirect(request,'signup.html',context)
-    return render(request,'signup.html')
+#         except:
+#             if password==con_password:
+#                 user=User.objects.create_user(username=username,password=password)
+                
+#                 if user:
+#                     return redirect('/')
+#         else:
+#             msg='Password does not matched'
+#             context={'msg':msg}
+#             return redirect(request,'signup.html',context)
+#     return render(request,'signup.html')
+
+
+def create_user(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            
+            # messages.success(request, 'Successfully created account')
+            
+            return redirect('login')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
 def user_login(request):
     if request.method=="POST":
-        username=request.POST['username']
+        user=request.POST['username']
         password=request.POST['password']
-        user=authenticate(username=username,password=password)
+        user=authenticate(username=user,password=password)
         if user:
             login(request,user)
             return redirect('/home')
@@ -76,8 +91,8 @@ def employee_detail(request,id):
     return render(request,'detail.html',context)
 
 def profile(request):
-    user=request.user
-    profile=Employee.objects.get(username=user)
+    username=request.user
+    profile=Employee.objects.get(user=username)
     department=profile.department
     dept=Employee.objects.filter(department=department)
     context={'profile':profile,'dept':dept}

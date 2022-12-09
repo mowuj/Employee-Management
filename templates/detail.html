@@ -11,7 +11,7 @@
             <div class="card-body">
                 <tbody>
                     <tr>
-                        <td>User Name: {{ i.username |title}}</td>
+                        <td>User Name: {{ user.username |title}}</td>
                         <br>
                         <td>Employee Id: {{ i.employee_id }}</td>
                         <br>
@@ -48,6 +48,7 @@
             <div class="card-body">
                 <tbody>
                     <tr>
+                        
                         <td>Full Name: {{ i.name }}</td>
                         <br>
                         <td>NID : {{ i.nid }}</td>
@@ -90,7 +91,7 @@
             </div>
 
         </div>
-        <a href="{% url 'profile-edit' i.id %}"> <button type="button"
+        <a href="{% url 'edit-profile' i.id %}"> <button type="button"
                 class="btn btn-outline-primary badge-pill ">Edit</button></a>
     </div>
     {% endfor %}

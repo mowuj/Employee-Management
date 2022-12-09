@@ -55,7 +55,7 @@ All employee
                     <th scope="row">{{forloop.counter}}</th>
                     <td><a href="{% url 'detail' i.id %}"><img style="width:50px;height:40px;" src="{{i.image.url}}"
                                 alt="" class="rounded-circle"></a></td>
-                    <td><a href="{% url 'detail' i.id %}">{{i.username.username | title}}</a></td>
+                    <td><a href="{% url 'detail' i.id %}">{{i.user.username | title}}</a></td>
                     <td>{{i.employee_id}}</td>
                     <td>{{i.post}}</td>
                     <td>{{i.phone}}</td>

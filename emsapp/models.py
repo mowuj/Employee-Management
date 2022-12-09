@@ -1,10 +1,11 @@
-from django.dispatch import receiver
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from PIL import Image
 from django.utils import timezone
-
+User=get_user_model()
 
 class Department(models.Model):
     name = models.CharField(max_length=150)
@@ -36,26 +37,26 @@ class District(models.Model):
 
 
 class Employee(models.Model):
-    username = models.OneToOneField(User, on_delete=models.CASCADE)
-    department = models.ForeignKey(
-        Department, on_delete=models.CASCADE, default="")
-    employee_id = models.CharField(max_length=150, default="")
-    district = models.ForeignKey(
-        District, on_delete=models.CASCADE, default="")
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, default="")
-    name = models.CharField(max_length=150, default="")
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    # department = models.ForeignKey(
+    #     Department, on_delete=models.CASCADE, default="")
+    employee_id = models.CharField(max_length=150, blank=True, null=True)
+    # district = models.ForeignKey(
+    #     District, on_delete=models.CASCADE, default="")
+    # post = models.ForeignKey(Post, on_delete=models.CASCADE, default="")
+    name = models.CharField(max_length=150, blank=True, null=True)
     ssc = models.FloatField(blank=True, null=True)
     hsc = models.FloatField(blank=True, null=True)
     honors = models.FloatField(blank=True, null=True)
     masters = models.FloatField(blank=True, null=True)
-    email = models.EmailField(default="")
+    email = models.EmailField(blank=True, null=True)
     nid = models.IntegerField(blank=True, null=True)
     salary = models.IntegerField(blank=True, null=True)
     phone = models.CharField(max_length=150, default="")
     father_name = models.CharField(max_length=150, default="")
     mother_name = models.CharField(max_length=150, default="")
     image = models.ImageField(
-        default='default.jpg', upload_to='media/images')
+        default='default.jpg', upload_to='media/images', blank=True)
 
     def save(self, *args, **kwargs):
         super(Employee, self).save(*args, **kwargs)

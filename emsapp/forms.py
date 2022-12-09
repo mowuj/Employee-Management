@@ -2,12 +2,15 @@ from .models import *
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
-
+class SignUpForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','email','password',]
 class EmployeeAddForm(ModelForm):
     class Meta:
         model=Employee
         fields="__all__"
-        exclude=("username",)
+        # exclude=("username",)
 
 class TaskForm(ModelForm):
     class Meta:
