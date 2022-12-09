@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Task Form</title>
+{% endblock title %}
+{% block body %}
+<style>
+    .primary-btn {
+        outline: 0;
+        border: 0;
+        padding: 5px 5px;
+        background-image: linear-gradient(90deg, #c21273, #FF008E);
+        color: #fff;
+        font-size: 1.25em;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 7px 0 #a5075e;
+        position: relative;
+        top: 0;
+        margin: 5px 0;
+    }
+
+    .primary-btn:active {
+        top: 5px;
+        box-shadow: 0 2px 0 #a5075e;
+    }
+</style>
+
+<div class="container mt-3 ">
+    <div class="row d-flex justify-content-center mt-3">
+        <div class="m-auto col-md-6">
+            {% if msg %}
+            <h5 class="bg-success text-white p-3 m-3 badge-pill">{{msg}}</h5>
+            {% endif %}
+            <h3 class="text-center bg-secondary text-light badge-pill p-2 m-3">Add Task</h3>
+            <form action="" method="post">
+                {%csrf_token%}
+                {{form.as_p}}
+                <button type="submit" class="primary-btn">Submit</button>
+                <a href="{% url 'home' %}"> <button type="button" class="primary-btn">Go To Home</button></a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

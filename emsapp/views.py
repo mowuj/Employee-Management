@@ -103,3 +103,55 @@ def delete(request):
     remove=Employee.objects.get(id=id)
     remove=remove.delete()
     return('/all-employee')
+
+
+def add_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user = request.user
+            form.do_status = True
+            form = form.save()
+            msg = " Submitted "
+            form = TaskForm()
+            context = {'form': form, 'msg': msg}
+
+            return render(request, 'add-task.html', context)
+
+    form = TaskForm()
+
+    context = {'form': form}
+    return render(request, 'add-task.html', context)
+
+def daily_task(request):
+    user=request.user
+    do_task=DailyTask.objects.filter(user=user,do_status=True)
+    working_task=DailyTask.objects.filter(user=user,working_status=True)
+    done_task=DailyTask.objects.filter(user=user,done_status=True)
+    context={
+        'do_task':do_task,
+        'working_task':working_task,
+        'done_task':done_task
+    }
+    return render(request,'daily-task.html',context)
+def move_task(request,id,sts):
+    task=DailyTask.objects.get(id=id)
+    if sts=='move working':
+        task.working_status=True
+        task.do_status=False
+        task.save()
+        return redirect('daily-task')
+    if sts=='move done':
+        task.done_status=True
+        task.working_status=False
+        task.do_status=False
+        task=task.save()
+        return redirect('/daily-task')
+    if sts=='done':
+        task.done_status=False
+        task.working_status=False
+        task.do_status=False
+        task.save()
+        return redirect('/daily_task')
+    return redirect('/daily-task')

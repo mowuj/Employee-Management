@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Daily Task</title>
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="row d-flex justify-content-center mt-3">
+        <div class="col-md-6 mt-2 mb-3 ">
+            <h4 class="bg-secondary text-center text-light badge-pill p-3">Daily Task</h4>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-4">
+            <div class="card" style="width: 24rem;">
+                <div class="card-header ">
+                    Do Task
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    {% if do_task %}
+                    
+                    {% for i in do_task %}
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Index</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Delavery</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                            <th scope="row">{{forloop.counter}}.</th>
+                            <td>{{ i.title }}</td>
+                            <td>{{i.delivery}}</td>
+                            <td><a href="{% url 'move-task' i.id 'move working' %}"><button>Move</button></a></td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+                    
+                    {% endfor %}
+
+                    {% else %}
+                    <h4 class="text-muted text-center">No Task!</h4>
+                    {% endif %}
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 24rem;">
+                <div class="card-header">
+                    Working Task
+                </div>
+                {% if working_task %}
+                <ul class="list-group list-group-flush">
+                    {% for i in working_task %}
+
+
+                    <!-- <li class="list-group-item">{{i.title}}
+                        <a href="{% url 'move-task' i.id 'move done' %}"><button>Move</button></a>
+                    </li>
+                    </li> -->
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Index</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Delavery</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                            <th scope="row">{{forloop.counter}}.</th>
+                            <td>{{ i.title }}</td>
+                            <td>{{i.delivery}}</td>
+                            <td><a href="{% url 'move-task' i.id 'move done' %}"><button>Move</button></a></td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+                    {% endfor %}
+
+                    {% else %}
+                    <h4 class="text-muted text-center">No Task!</h4>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width: 24rem;">
+                <div class="card-header">
+                    Done Task
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if done_task %}
+                    {% for i in done_task %}
+                    <!-- <li class="list-group-item">{{ i.title }}
+                        <a href="{% url 'move-task' i.id 'done' %}"><button>Move</button></a>
+                    </li> -->
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Index</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Delavery</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    
+                            <th scope="row">{{forloop.counter}}.</th>
+                            <td>{{ i.title }}</td>
+                            <td>{{i.delivery}}</td>
+                            <td><a href="{% url 'move-task' i.id 'done' %}"><button>Move</button></a></td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+                    {% endfor %}
+
+
+                    {% else %}
+                    <h4 class="text-muted text-center">No Task!</h4>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

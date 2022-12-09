@@ -8,3 +8,21 @@ class EmployeeAddForm(ModelForm):
         model=Employee
         fields="__all__"
         exclude=("username",)
+
+class TaskForm(ModelForm):
+    class Meta:
+        model=DailyTask
+        fields=[
+            'title',
+            'description',
+            'delivery'
+        ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
+                                            'placeholder': 'Enter Your Task Title'}),
+
+            'description': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
+                                                  'placeholder': 'Enter Your Task Description '}),
+            'delivery': forms.DateInput(format=('%d/%m/%y'), attrs={'class': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
+
+        }

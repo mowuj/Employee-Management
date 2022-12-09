@@ -12,6 +12,8 @@ urlpatterns = [
     path('detail/<int:id>', employee_detail, name='detail'),
     path('profile', profile, name='profile'),
     path('profile-detail/<int:id>', profile_detail, name='profile-detail'),
-    path('profile-edit/<int:id>', edit_profile, name='profile-edit'),
+    path('daily-task', daily_task, name='daily-task'),
+    path('add-task', add_task, name='add-task'),
+    path('move-task/<int:id>/<sts>', move_task, name='move-task'),
     
 ]

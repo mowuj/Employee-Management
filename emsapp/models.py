@@ -98,15 +98,18 @@ class DailyTask(models.Model):
     working_status = models.BooleanField(default=False)
     done_status = models.BooleanField(default=False)
     issue_date = models.DateTimeField(auto_now_add=True)
+    delivery = models.DateField(
+        auto_now_add=False, blank=True, null=True)
 
     def __str__(self):
-        return str(self.user)
+        return f"str(self.user) and str(self.title)"
 
 
 class Meeting(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
-    meeting_date = models.DateTimeField(auto_now=False, auto_now_add=False)
+    meeting_date = models.DateTimeField(
+        auto_now=False, auto_now_add=False, blank=True, null=True)
 
     def __str__(self):
         return str(self.user)
