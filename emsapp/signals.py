@@ -7,8 +7,6 @@ user =get_user_model()
 
 @receiver(post_save,sender=user)
 def create_employee(sender,instance,created,**kwargs):
-    print("sender-->",sender)
-    print('Instance-->',instance)
-    print('Created-->',created)
+    
     if created:
         Employee.objects.create(user=instance)

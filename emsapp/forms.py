@@ -1,11 +1,15 @@
 from .models import *
 from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-class SignUpForm(ModelForm):
+
+
+class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username','email','password',]
+        fields = ['username','email','password1','password2']
+
 class EmployeeAddForm(ModelForm):
     class Meta:
         model=Employee

@@ -9,21 +9,21 @@ User=get_user_model()
 
 class Department(models.Model):
     name = models.CharField(max_length=150)
-
+    
     def __str__(self):
         return self.name
 
 
 class Post(models.Model):
     name = models.CharField(max_length=150)
-
+        
     def __str__(self):
         return self.name
 
 
 class Division(models.Model):
     name = models.CharField(max_length=150)
-
+    
     def __str__(self):
         return self.name
 
@@ -37,13 +37,17 @@ class District(models.Model):
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE)
     # department = models.ForeignKey(
-    #     Department, on_delete=models.CASCADE, default="")
-    employee_id = models.CharField(max_length=150, blank=True, null=True)
+    #     Department, on_delete=models.CASCADE, blank=True, null=True, related_name='post_set')
+    
     # district = models.ForeignKey(
-    #     District, on_delete=models.CASCADE, default="")
-    # post = models.ForeignKey(Post, on_delete=models.CASCADE, default="")
+    #     District, on_delete=models.CASCADE,  related_name='district_set')
+    
+    # post = models.ForeignKey(Post, on_delete=models.CASCADE,
+    #                          blank=True, null=True, related_name='district_set')
+    employee_id = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=150, blank=True, null=True)
     ssc = models.FloatField(blank=True, null=True)
     hsc = models.FloatField(blank=True, null=True)
@@ -67,7 +71,7 @@ class Employee(models.Model):
             img.save(self.image.path)
 
     def __str__(self):
-        return str(self.name)
+        return str(self.user)
 
 class Leave(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
