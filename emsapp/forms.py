@@ -33,3 +33,12 @@ class TaskForm(ModelForm):
             'delivery': forms.DateInput(format=('%d/%m/%y'), attrs={'class': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
 
         }
+
+class LeaveForm(ModelForm):
+    class Meta:
+        model=Leave
+        fields=[
+            'cause_of_leave',
+            'start_date',
+            'end_date'
+        ]

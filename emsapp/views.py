@@ -214,3 +214,49 @@ def complete_task(request):
     print(complete_task)
     context = {'complete_task': complete_task}
     return render(request, 'daily-task.html', context)
+
+def leave_application(request):
+    if request.method=='POST':
+        form=LeaveForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.user=request.user
+            form=form.save()
+            msg="Application Submitted Please wait for Permission"
+            context={
+                'form':form,
+                'msg': msg
+            }
+            return render(request, 'leave-form.html', context)
+
+    form=LeaveForm()
+    context={
+        'form':form
+    }
+    return render (request,'leave-form.html',context)
+
+def new_application(request):
+    application=Leave.objects.filter(check_status=False)
+    context={'application':application}
+    return render(request,'new-application.html',context)
+
+def process_application(request,id,sts):
+    leave=Leave.objects.get(id=id)
+    leave.check_status=True
+    if sts==1:
+        leave.approve_status=True
+        leave=leave.save()
+        return redirect('/new-application')
+    else:
+        leave.approve_status=False
+        leave=leave.save()
+        return redirect('/new-application')
+    return redirect('/new-application')
+
+def my_leave(request):
+    approve = Leave.objects.filter(approve_status=True)
+    application = Leave.objects.filter(user=request.user, approve_status=True)
+    context={
+        'application': application
+    }
+    return render(request,'my-application.html',context)

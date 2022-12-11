@@ -17,5 +17,8 @@ urlpatterns = [
     path('complete-task', complete_task, name='complete-task'),
     path('add-task', add_task, name='add-task'),
     path('move-task/<int:id>/<sts>', move_task, name='move-task'),
-    
+    path('leave-application', leave_application, name='leave-application'),
+    path('new-application', new_application, name='new-application'),
+    path('process-application/<int:id>/<int:sts>', process_application, name='process-application'),
+    path('my-leave', my_leave, name='my-leave')
 ]

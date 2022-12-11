@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>My Application</title>
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="row d-flex justify-content-center mt-3">
+        <div class="col-md-6 mt-2 mb-3 ">
+            <h4 class="bg-secondary text-center text-light badge-pill p-3">My Applications</h4>
+        </div>
+    </div>
+    <div class="col-md-10 m-auto">
+
+        {% if application %}
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-success">Approved</button>
+            <button type="button" class="btn btn-secondary">Processing</button>
+            <button type="button" class="btn btn-danger">Rejected</button>
+        </div>
+        <table class="table table-bordered mt-5">
+            <thead>
+
+                <tr>
+                    <th scope="col">#</th>
+
+                    <th scope="col">Apply Date</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Cause Of leave</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in application %}
+                <tr {% if i.approve_status==True %} class="btn-success" {% elif i.approve_status==False and
+                    i.check_status==True %} class="btn-danger" {% else %} class="btn-secondary" {% endif %}>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{i.apply_date}}</td>
+                    <td>{{i.start_date}}</td>
+                    <td>{{i.end_date}}</td>
+                    <td>{{i.cause_of_leave}}</td>
+
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+        {% else %}
+        <h4 class="text-muted text-center">No Application!</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}
