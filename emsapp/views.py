@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -11,65 +11,47 @@ from django.db.models import Sum, Q
 import datetime
 from datetime import date
 
+import holidays
+
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
 # def create_user(request):
-#     if request.method=="POST":
-#         username=request.POST['username']
-#         password = request.POST['password']
-#         con_password = request.POST['con_password']
-#         try:
-#             user=User.objects.get(username=username)
-#             if user:
-#                 msg="This username already taken"
-#                 context={'msg':msg}
-#                 return render(request,'signup.html',context)
+#     if request.method == "POST":
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             employee = Employee.objects.create()
 
-#         except:
-#             if password==con_password:
-#                 user=User.objects.create_user(username=username,password=password)
+#             # messages.success(request, 'Successfully created account')
 
-#                 if user:
-#                     return redirect('/')
-#         else:
-#             msg='Password does not matched'
-#             context={'msg':msg}
-#             return redirect(request,'signup.html',context)
-#     return render(request,'signup.html')
+#             return redirect('login')
+#     else:
+#         form = SignUpForm()
+#     return render(request, 'signup.html', {'form': form})
 
 
 def create_user(request):
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
+    if request.method == 'POST':
+        fm = SignUpForm(data=request.POST)
+        form = EmployeeForm(data=request.POST)
+        if fm.is_valid() and form.is_valid():
+           user = fm.save()
+           user.set_password(user.password)
 
-            # messages.success(request, 'Successfully created account')
-
-            return redirect('login')
+           user_form = form.save(commit=False)
+           user_form.user = user
+           
+           user_form.save()
+           messages.success(request, 'Account Created !')
     else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        fm = SignUpForm()
+        form = EmployeeForm()
 
-# def user_login(request):
-#     if request.method=="POST":
-#         user=request.POST['username']
-#         password=request.POST['password']
-#         user=authenticate(username=user,password=password)
-#         print('login')
-#         if user is not None:
-#             login(request,user)
-#             print('login2')
-#             return redirect('/')
-#         else:
-#             msg="Username or password is Incorrect"
-#             context={'msg':msg}
-#             return render(request,'login.html',context)
-#     return render (request,'login.html')
-
+    context = {'fm': fm, 'form': form}
+    return render(request, 'signup.html', context)
 
 def user_login(request):
     if request.method == 'POST':
@@ -97,7 +79,7 @@ def add_employee(request):
         if form.is_valid():
             form.save()
             context = {'form': form}
-            return redirect('add_employee.html')
+            return redirect('all-employee')
     form = EmployeeAddForm()
     context = {'form': form}
     return render(request, 'add_employee.html', context)
@@ -252,11 +234,74 @@ def process_application(request,id,sts):
         leave=leave.save()
         return redirect('/new-application')
     return redirect('/new-application')
-
+# def today_leaving(request):
+#     today = datetime.datetime.now()
+    
+#     leave = Leave.object.filter(approve_status=True)
+    
 def my_leave(request):
-    approve = Leave.objects.filter(approve_status=True)
+    
     application = Leave.objects.filter(user=request.user, approve_status=True)
     context={
         'application': application
     }
     return render(request,'my-application.html',context)
+
+# def holiday(request):
+#     uk_holidays = holidays.Bangladesh()
+
+
+# # Print all the holidays in UnitedKingdom in year 2018
+# for ptr in holidays.Bangladesh(years=2022).items():
+#     print(ptr)
+# from django.views import generic
+# from django.utils.safestring import mark_safe
+# from .utils import Calendar
+# from django.http import HttpResponse, HttpResponseRedirect
+# import calendar
+# from datetime import datetime, timedelta, date
+# class CalendarView(generic.ListView):
+#     model = Event
+#     template_name = 'calendar.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         d = get_date(self.request.GET.get('month', None))
+#         cal = Calendar(d.year, d.month)
+#         html_cal = cal.formatmonth(withyear=True)
+#         context['calendar'] = mark_safe(html_cal)
+#         context['prev_month'] = prev_month(d)
+#         context['next_month'] = next_month(d)
+#         return context
+
+# def get_date(req_month):
+#     if req_month:
+#         year, month = (int(x) for x in req_month.split('-'))
+#         return date(year, month, day=1)
+#     return datetime.today()
+
+# def prev_month(d):
+#     first = d.replace(day=1)
+#     prev_month = first - timedelta(days=1)
+#     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+#     return month
+
+# def next_month(d):
+#     days_in_month = calendar.monthrange(d.year, d.month)[1]
+#     last = d.replace(day=days_in_month)
+#     next_month = last + timedelta(days=1)
+#     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+#     return month
+
+# def event(request, event_id=None):
+#     instance = Event()
+#     if event_id:
+#         instance = get_object_or_404(Event, pk=event_id)
+#     else:
+#         instance = Event()
+
+#     form = EventForm(request.POST or None, instance=instance)
+#     if request.POST and form.is_valid():
+#         form.save()
+#         return HttpResponseRedirect(reverse('calendar'))
+#     return render(request, 'event.html', {'form': form})

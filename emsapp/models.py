@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from PIL import Image
 from django.utils import timezone
+from django.urls import reverse
 User=get_user_model()
 
 class Department(models.Model):
@@ -21,32 +22,33 @@ class Post(models.Model):
         return self.name
 
 
-class Division(models.Model):
-    name = models.CharField(max_length=150)
+def get_post():
+    return Post.objects.get(id=1)
+
+# class Division(models.Model):
+#     name = models.CharField(max_length=150)
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
-class District(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE)
-    name = models.CharField(max_length=150)
+# class District(models.Model):
+#     division = models.ForeignKey(Division, on_delete=models.CASCADE,default=Division.objects.get_or_create(id=2)[0]),
+#     name = models.CharField(max_length=150)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 class Employee(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE)
+        User, on_delete=models.CASCADE,  blank=True, null=True)
     # department = models.ForeignKey(
-    #     Department, on_delete=models.CASCADE, blank=True, null=True, related_name='post_set')
-    
-    # district = models.ForeignKey(
-    #     District, on_delete=models.CASCADE,  related_name='district_set')
-    
-    # post = models.ForeignKey(Post, on_delete=models.CASCADE,
-    #                          blank=True, null=True, related_name='district_set')
+    #     Department, on_delete=models.CASCADE, default=Department.objects.get_or_create(id=1)[0], blank=True, null=True, related_name='post_set')
+    # # district = models.ForeignKey(
+    # #     District, on_delete=models.CASCADE, default=District.objects.get_or_create(id=1)[0], related_name='district_set')
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL,
+                             blank=True, null=True, related_name='district_set', default='')
     employee_id = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=150, blank=True, null=True)
     ssc = models.FloatField(blank=True, null=True)
@@ -131,6 +133,15 @@ class Client(models.Model):
         return str(self.client_name)
 
 
+# class Event(models.Model):
+#     title = models.CharField(max_length=200)
+#     description = models.TextField()
+#     start_time = models.DateTimeField()
+#     end_time = models.DateTimeField()
 
+#     @property
+#     def get_html_url(self):
+#         url = reverse('cal:event_edit', args=(self.id,))
+#         return f'<a href="{url}"> {self.title} </a>'
 
 

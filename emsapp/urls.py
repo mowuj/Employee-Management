@@ -20,5 +20,8 @@ urlpatterns = [
     path('leave-application', leave_application, name='leave-application'),
     path('new-application', new_application, name='new-application'),
     path('process-application/<int:id>/<int:sts>', process_application, name='process-application'),
-    path('my-leave', my_leave, name='my-leave')
+    path('my-leave', my_leave, name='my-leave'),
+    # url(r'^index/$', views.index, name='index'),
+    # path('calendar', CalendarView.as_view(), name='calendar'),
+    # path('event/<int:event_id>/', event, name='event_edit'),
 ]
