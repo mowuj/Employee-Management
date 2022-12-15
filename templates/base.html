@@ -13,7 +13,11 @@
     <meta name="keyword" content="">
 
     <title>My Company</title>
-
+<!-- charts cdn 
+ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"
+    integrity="sha512-tQYZBKe34uzoeOjY9jr3MX7R/mo7n25vnqbnrkskGr4D6YOoPYSpyafUAzQVjV6xAozAqUFIEFsCO4z8mnVBXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Icons -->
     <link href="{% static 'dist/vendors/css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'dist/vendors/css/simple-line-icons.min.css' %}" rel="stylesheet">
@@ -56,14 +60,14 @@
         </ul>
         <ul class="nav navbar-nav ml-auto">
             <li>
-                <span><i> Wellcome</i> &nbsp;<b><i>{{request.user|title}}</i></b> &nbsp;</span>
+                <span><i> Welcome</i> &nbsp;<b><i>{{request.user|title}}</i></b> &nbsp;</span>
             </li>
             <li class="nav-item dropdown">
 
                 <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
                     aria-haspopup="true" aria-expanded="false">
 
-                    <img style="width:40px;height:40px;" src="" class="img-avatar"
+                    <img style="width:40px;height:40px;" src="{{ request.user.employee.image.url }}" class="img-avatar"
                         alt="admin@bootstrapmaster.com">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -75,12 +79,12 @@
                     <div class="dropdown-header text-center">
                         <strong>Settings</strong>
                     </div>
-                    <a class="dropdown-item" href=""><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa fa-user"></i> Profile</a>
                     <a class="dropdown-item" href=""><i class="fa fa-user"></i>User
                         Details</a>
-                    <a class="dropdown-item" href="/Admin/"><i class="fa fa-wrench"></i> Settings</a>
+                    <a class="dropdown-item" href="/admin/"><i class="fa fa-wrench"></i> Settings</a>
 
-                    <a class="dropdown-item" href=""><i class="fa fa-lock"></i> Logout</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a>
                 </div>
             </li>
         </ul>
@@ -125,12 +129,12 @@
                             <i class="nav-icon icon-user"></i> Client</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{% url 'client' %}">
                                     <i class="nav-icon icon-puzzle"></i> Client List</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{% url 'add-client' %}">
                                     <i class="nav-icon icon-puzzle"></i> Create Client</a>
                             </li>
 
@@ -178,11 +182,11 @@
                             <i class="nav-icon icon-user"></i> Meeting</a>
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{% url 'create-meeting' %}">
                                     <i class="nav-icon icon-puzzle"></i> Create Meeting</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">
+                                <a class="nav-link" href="{% url 'meeting' %}">
                                     <i class="nav-icon icon-puzzle"></i> Today Meeting</a>
                             </li>
                         </ul>
@@ -298,7 +302,9 @@
         <!-- Custom scripts required by this view -->
         <script src="{% static 'dist/js/views/main.js' %}"></script>
         <script src="{% static 'custom.js' %}"></script>
-        
+        {% block js %}
+          
+        {% endblock js %}
 
 
 

@@ -13,25 +13,8 @@ from datetime import date
 
 import holidays
 
-
-# Create your views here.
 def home(request):
     return render(request, 'home.html')
-
-# def create_user(request):
-#     if request.method == "POST":
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             employee = Employee.objects.create()
-
-#             # messages.success(request, 'Successfully created account')
-
-#             return redirect('login')
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'signup.html', {'form': form})
-
 
 def create_user(request):
     if request.method == 'POST':
@@ -71,6 +54,9 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+def user_logout(request):
+    logout(request)
+    return redirect('login')
 
 def add_employee(request):
     form = EmployeeAddForm()
@@ -125,11 +111,11 @@ def edit_profile(request, id):
     return render(request, 'edit-profile.html', context)
 
 
-def delete(request):
-    remove = Employee.objects.get(id=id)
-    remove = remove.delete()
-    return ('/all-employee')
 
+def delete(request, id):
+    remove = Employee.objects.filter(id=id)
+    remove = remove.delete()
+    return redirect('/all-employee')
 
 def add_task(request):
     if request.method == 'POST':
@@ -234,11 +220,7 @@ def process_application(request,id,sts):
         leave=leave.save()
         return redirect('/new-application')
     return redirect('/new-application')
-# def today_leaving(request):
-#     today = datetime.datetime.now()
-    
-#     leave = Leave.object.filter(approve_status=True)
-    
+
 def my_leave(request):
     
     application = Leave.objects.filter(user=request.user, approve_status=True)
@@ -247,61 +229,61 @@ def my_leave(request):
     }
     return render(request,'my-application.html',context)
 
-# def holiday(request):
-#     uk_holidays = holidays.Bangladesh()
+def holiday(request):
+    bd_holidays = holidays.Bangladesh()
+
+    # for ptr in holidays.Bangladesh(years=2022).items():
+    context = {
+        'bd_holidays ': bd_holidays
+    }
+    return render(request, 'holiday.html', context)
+
+def create_meeting(request):
+    if request.method=="POST":
+        form=MeetingForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.user=request.user
+            form=form.save()
+            msg='Meeting Shedule Added'
+            form=MeetingForm()
+            context={'form':form,'msg':msg}
+            return render(request,'create-meeting.html',context)
+    form=MeetingForm()
+    context={'form':form}
+    return render(request,'create-meeting.html',context)
+
+def today_meeting(request):
+    meeting = Meeting.objects.filter(meeting_date=datetime.datetime.now())
+    context={'meeting':meeting}
+    return render (request,'meeting.html',context)
+
+def add_client(request):
+    form=ClientForm()
+    if request.method=='POST':
+        form=ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            msg='Client added successfully'
+            context={
+                'form':form,
+                'msg':msg
+            }
+            return redirect('/client')
+    form=ClientForm()
+    context={'form':form}
+    return render(request,'create-client.html',context)
+
+def client(request):
+    all_client = Client.objects.all()
+    clientfilter = ClientFilter(request.GET, queryset=all_client)
+    all_client = clientfilter.qs
+    context = {'all_client': all_client, 'clientfilter': clientfilter}
+    return render (request,'client.html',context)
 
 
-# # Print all the holidays in UnitedKingdom in year 2018
-# for ptr in holidays.Bangladesh(years=2022).items():
-#     print(ptr)
-# from django.views import generic
-# from django.utils.safestring import mark_safe
-# from .utils import Calendar
-# from django.http import HttpResponse, HttpResponseRedirect
-# import calendar
-# from datetime import datetime, timedelta, date
-# class CalendarView(generic.ListView):
-#     model = Event
-#     template_name = 'calendar.html'
+def client_delete(request,id):
+    client=Client.objects.filter(id=id)
+    client=client.delete()
+    return redirect('client')
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         d = get_date(self.request.GET.get('month', None))
-#         cal = Calendar(d.year, d.month)
-#         html_cal = cal.formatmonth(withyear=True)
-#         context['calendar'] = mark_safe(html_cal)
-#         context['prev_month'] = prev_month(d)
-#         context['next_month'] = next_month(d)
-#         return context
-
-# def get_date(req_month):
-#     if req_month:
-#         year, month = (int(x) for x in req_month.split('-'))
-#         return date(year, month, day=1)
-#     return datetime.today()
-
-# def prev_month(d):
-#     first = d.replace(day=1)
-#     prev_month = first - timedelta(days=1)
-#     month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
-#     return month
-
-# def next_month(d):
-#     days_in_month = calendar.monthrange(d.year, d.month)[1]
-#     last = d.replace(day=days_in_month)
-#     next_month = last + timedelta(days=1)
-#     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
-#     return month
-
-# def event(request, event_id=None):
-#     instance = Event()
-#     if event_id:
-#         instance = get_object_or_404(Event, pk=event_id)
-#     else:
-#         instance = Event()
-
-#     form = EventForm(request.POST or None, instance=instance)
-#     if request.POST and form.is_valid():
-#         form.save()
-#         return HttpResponseRedirect(reverse('calendar'))
-#     return render(request, 'event.html', {'form': form})

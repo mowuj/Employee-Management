@@ -49,20 +49,32 @@ class LeaveForm(ModelForm):
             'start_date',
             'end_date'
         ]
+        widgets = {
+            'cause_of_leave': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2','placeholder': 'Cause of Leave'}),
+            'start_date': forms.DateInput(format=('%d/%m/%y'), attrs={'class': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
+            'end_date': forms.DateInput(format=(' % d/%m/%y'), attrs={'class ': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
 
+        }
 
-# class EventForm(ModelForm):
-#   class Meta:
-#     model = Event
-#     # datetime-local is a HTML5 input type, format to make date time show on fields
-#     widgets = {
-#         'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
-#         'end_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
-#     }
-#     fields = '__all__'
+class MeetingForm(ModelForm):
+    class Meta:
+        model=Meeting
+        fields=[
+            'name',
+            'person_with',
+            'meeting_date',
+            'meeting_time',
+            
+        ]
+        widgets={
+            'name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2', 'placeholder': 'Name...'}),
+            'person_with': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2', 'placeholder': 'Meeting With...'}),
+            'meeting_date': forms.DateInput(format=(' % d/%m/%y'), attrs={'class ': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
+            'meeting_time': forms.TimeInput(format=('%H:%M'), attrs={'type': 'time',
+                'class': 'form-control bg-light badge-pill'})
+        }
 
-#   def __init__(self, *args, **kwargs):
-#     super(EventForm, self).__init__(*args, **kwargs)
-#     # input_formats parses HTML5 datetime-local input to datetime field
-#     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
-#     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+class ClientForm(ModelForm):
+    class Meta:
+        model=Client
+        fields='__all__'

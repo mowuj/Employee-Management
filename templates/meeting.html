@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Holiday</title>
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="row d-flex justify-content-center mt-3">
+        <div class="col-md-6 mt-2 mb-3 ">
+            <h4 class="bg-secondary text-center text-light badge-pill p-3">Today Meeting</h4>
+        </div>
+    </div>
+    <div class="col-md-10 m-auto">
+
+
+        {% if meeting %}
+        <table class="table table-bordered mt-5">
+            <thead>
+
+                <tr class=" table-secondary">
+                    <th scope="col">#</th>
+
+
+                    <th scope="col">Name</th>
+                    <th scope="col">Meeting Time</th>
+                    <th scope="col">Meeting Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    {% for i in meeting %}
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{i.name}}</td>
+                    <td>{{i.meeting_time}}</td>
+                    <td>{{i.meeting_date |default:'-'}}</td>
+
+
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+        {% else %}
+        <h4 class="text-muted text-center">No Meeting Today!</h4>
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

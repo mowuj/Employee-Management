@@ -2,7 +2,9 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-    <h3 class="text-center">This is home page</h3>
+    {% if chart %}
+    <img src="data:image/png:base64,{{chart|safe}}" alt="">
+    {% endif %}
 
 </div>
 {% endblock body %}

@@ -6,7 +6,9 @@ urlpatterns = [
     path('',home,name='home'),
     path('login', user_login, name='login'),
     path('signup', create_user, name='signup'),
+    path('logout', user_logout, name='logout'),
     path('add-employee', add_employee, name='add-employee'),
+
     path('all-employee', all_employee, name='all-employee'),
     path('delete/<int:id>', delete, name='delete'),
     path('detail/<int:id>', employee_detail, name='detail'),
@@ -21,7 +23,9 @@ urlpatterns = [
     path('new-application', new_application, name='new-application'),
     path('process-application/<int:id>/<int:sts>', process_application, name='process-application'),
     path('my-leave', my_leave, name='my-leave'),
-    # url(r'^index/$', views.index, name='index'),
-    # path('calendar', CalendarView.as_view(), name='calendar'),
-    # path('event/<int:event_id>/', event, name='event_edit'),
+    path('create-meeting', create_meeting, name='create-meeting'),
+    path('meeting', today_meeting, name='meeting'),
+    path('add-client', add_client, name='add-client'),
+    path('client', client, name='client'),
+    path('client-delete/<int:id>', client_delete, name='client-delete'),
 ]

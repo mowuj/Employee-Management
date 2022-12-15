@@ -19,3 +19,11 @@ class EmployeeFilter(django_filters.FilterSet):
             'father_name',
             'mother_name'
         ]
+class ClientFilter(django_filters.FilterSet):
+    class Meta:
+        model=Client
+        fields='__all__'
+        exclude=[
+            'email',
+            'phone'
+        ]
