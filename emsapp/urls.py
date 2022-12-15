@@ -28,4 +28,5 @@ urlpatterns = [
     path('add-client', add_client, name='add-client'),
     path('client', client, name='client'),
     path('client-delete/<int:id>', client_delete, name='client-delete'),
+    path('attendance', attendance_view, name='attendance'),
 ]

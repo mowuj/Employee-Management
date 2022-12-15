@@ -287,3 +287,33 @@ def client_delete(request,id):
     client=client.delete()
     return redirect('client')
 
+def attendance_view(request):
+    employee = Employee.objects.get(user=request.user)
+    status = None
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            try:
+                attended_datetime = str(timezone.now())[:10]
+                print(attended_datetime)
+            except:
+                pass
+
+            attended_today = Attendance.objects.filter(attender=request.user, datetime__startswith=attended_datetime)
+            
+            if str(attended_today)[10:] == "[]>":
+                status = 3
+
+            else:
+                status = 2
+                msg="Sorry, you can't attend more than once in a day"
+
+            if status == 3:
+                attend_object = Attendance(attender=request.user)
+                attend_object.save()
+                status= 1
+                msg="Welcome.Attendance successful"
+            return render(request,"attend.html",{'status': status,"employee":employee,'msg':msg})
+
+        else: 
+            status = 0
+    return render(request, "attend.html", {'status': status,"employee":employee})

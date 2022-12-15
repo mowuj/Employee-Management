@@ -131,9 +131,9 @@ class Client(models.Model):
     def __str__(self):
         return str(self.client_name)
 
-class Product(models.Model):
-    product_name = models.CharField(max_length = 150)
-    price = models.IntegerField(blank=True, null=True)
 
+class Attendance(models.Model):
+    attender=models.ForeignKey(User,on_delete=models.CASCADE)
+    datetime=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return str(self.product_name)
+        return str(self.attender.username + " " + str(self.datetime)[:19])
