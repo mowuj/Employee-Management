@@ -36,8 +36,9 @@
                     <th scope="col">Name</th>
                     <th scope="col">Employee ID</th>
                     <th scope="col">Post</th>
-                    <th scope="col">Phone</th>
+                    
                     <th scope="col">Department</th>
+                    <th scope="col">Date</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -51,8 +52,9 @@
                     <td><a href="">{{employee.name}}</a></td>
                     <td>{{employee.employee_id}}</td>
                     <td>{{employee.post}}</td>
-                    <td>{{employee.phone}}</td>
+                    
                     <td>{{employee.department}}</td>
+                    <td>{% now "D jS N Y" %}</td>
                     <td> 
                         <!-- <a href="">
                             <button type="button" class="btn btn-danger">X</button>

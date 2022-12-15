@@ -286,15 +286,15 @@ def client_delete(request,id):
     client=Client.objects.filter(id=id)
     client=client.delete()
     return redirect('client')
-
 def attendance_view(request):
     employee = Employee.objects.get(user=request.user)
+    attendance=Attendance.objects.all()
     status = None
     if request.method == "POST":
         if request.user.is_authenticated:
             try:
                 attended_datetime = str(timezone.now())[:10]
-                print(attended_datetime)
+                
             except:
                 pass
 
@@ -312,8 +312,13 @@ def attendance_view(request):
                 attend_object.save()
                 status= 1
                 msg="Welcome.Attendance successful"
-            return render(request,"attend.html",{'status': status,"employee":employee,'msg':msg})
+            return render(request,"attend.html",{'status': status,"employee":employee,'msg':msg,"attendance":attendance})
 
         else: 
             status = 0
     return render(request, "attend.html", {'status': status,"employee":employee})
+
+def attendance_report(request):
+    attend=Attendance.objects.filter(datetime__date=datetime.datetime.today())
+    print(attend)
+    return render(request,'report.html',{'attend':attend})
