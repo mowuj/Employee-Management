@@ -109,7 +109,7 @@ class DailyTask(models.Model):
         auto_now_add=False, blank=True, null=True)
 
     def __str__(self):
-        return str(self.user) +" " + str(self.title)
+        return str(self.user) + " " + str(self.title)
 
 
 class Meeting(models.Model):

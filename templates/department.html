@@ -11,7 +11,22 @@
         </div>
     </div>
  <div class="row">
-    <div class="col-md-12">
+    {% for i in all_dept %}
+    <div class="col-md-3">
+        <div class="card text-center">
+            <a href="{% url 'edit-department' i.id%}"><img src="{{i.image.url}}" class="card-img-top img-fluid img-thumbnail"
+                    style="height:200px" alt="..."></a>
+            <div class="card-body">
+                <h5 class="card-title">{{i.name}}</h5>
+                <p class="card-text">Manager: {{i.manager}}</p>
+                <p class="card-text">Start Date: {{i.start_date}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+   
+    
+    <!-- <div class="col-md-12">
            <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for i in all_dept %}
         <div class="col">
@@ -27,7 +42,7 @@
         {% endfor %}
     </div>
 
-    </div>
+    </div> -->
  </div>
 
 </div>

@@ -6,9 +6,20 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm(UserCreationForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(
+    attrs={'class':'form-control bg-light badge-pill p-2 m-2','type':'password', 'name': 'password','placeholder':'Enter Password'}),
+    label='Password')
+    password2 = forms.CharField(widget=forms.PasswordInput(
+    attrs={'class':'form-control bg-light badge-pill p-2 m-2','type':'password', 'name': 'password','placeholder':'Confirm Password'}),
+    label='Password')
     class Meta:
         model = User
         fields = ['username','password1','password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'UserName..','label':'Department Name'}),
+                                            
+        }
 
 class EmployeeAddForm(ModelForm):
     class Meta:
@@ -61,15 +72,33 @@ class EmployeeAddForm(ModelForm):
        
 
 class EmployeeForm(ModelForm):
-    post=forms.Select(attrs={
-            "class":"form-control"
-            })
     class Meta:
         model = Employee
-        fields = ['email',
-        'employee_id',
-        'post',
-        'department']
+        fields = [
+                'name',
+                'email',
+                'employee_id',
+                'salary',
+                'phone',
+                'post',
+                'department']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Full Name..','label':'User Name'}),
+            'email': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Email..','label':'Email'}),
+            'employee_id': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Employee ID..','label':'Employee ID'}),
+            'salary': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Employee Salary..','label':'Employee Salary'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Employee Phone..','label':'Employee Salary'}),
+            'post': forms.Select(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Post'}),
+            'department': forms.Select(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Department'}),
+                                            
+        }
 
 class DepartmentAddForm(ModelForm):
     class Meta:

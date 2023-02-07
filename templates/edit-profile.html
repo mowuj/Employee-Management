@@ -5,69 +5,59 @@
 <title>Add Employee</title>
 {% endblock title %}
 {% block body %}
-<div class="row d-flex justify-content-center mt-2">
-    <div class="col-md-6 mt-2 mb-2 ">
-        <h4 class="bg-primary text-center text-light badge-pill p-3">Edit User Informations</h4>
+<div class="container">
+    <div class="row d-flex justify-content-center mt-2">
+        <div class="col-md-6 mt-2 mb-2 ">
+            <h4 class="bg-primary text-center text-light badge-pill p-3">Edit User Informations</h4>
+        </div>
     </div>
-</div>
-<!-- <div class="row d-flex justify-content-center mt-0"> -->
-    <!-- <div class="col-md-12 m-auto">
-        {% if form %}
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form|crispy}}
-            {% endif %}
-            <button type="submit" class="btn btn-outline-success badge-pill">Submit</button>
-        </form>
-    </div> -->
-
-
-            
+    <div class="row">
+        <div class="col-md-10 mx-auto">
             <form class="row g-4" method="POST">
                 {% csrf_token %}
                 <div class="col-md-6">
                     <label for="inputName4" class="form-label">Name</label>
-                    
+            
                     {{form.name}}
                 </div>
                 <div class="col-md-6">
                     <label for="inputEmail4" class="form-label">Email</label>
-                
+            
                     {{form.email}}
                 </div>
-
+            
                 <div class="col-md-6">
                     <label for="inputPhone4" class="form-label">Phone </label>
-                
+            
                     {{form.phone}}
                 </div>
                 <div class="col-md-6">
                     <label for="inputNid4" class="form-label">NID number</label>
-                
+            
                     {{form.nid}}
                 </div>
                 <div class="col-md-6">
                     <label for="inputNid4" class="form-label">Father Name</label>
-                
+            
                     {{form.father_name}}
                 </div>
                 <div class="col-md-6">
                     <label for="inputNid4" class="form-label">Mother Name</label>
-                
+            
                     {{form.mother_name}}
                 </div>
-               
+            
                 <div class="col-md-6">
                     <label for="inputSalary" class="form-label">Salary</label>
-                
+            
                     {{form.salary}}
                 </div>
                 <div class="col-md-6">
                     <label for="inputDistrict" class="form-label">District</label>
-                
+            
                     {{form.district}}
                 </div>
-
+            
                 <div class="col-md-3">
                     <label for="inputSsc" class="form-label">SSC</label>
                     {{form.ssc}}
@@ -86,22 +76,25 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputImage" class="form-label">Image</label>
-                
+            
                     {{form.image}}
                 </div>
                 <!-- <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </div> -->
+                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                </div> -->
                 <div class="col-md-12 my-3 ">
-                    
+            
                     <div class="d-grid gap-2 col-4 mx-auto d-block">
                         <button class="btn btn-primary" type="submit">Submit</button>
                         <button class="btn btn-primary" type="reset">Reset</button>
                     </div>
                 </div>
             </form>
-
-
+        </div>
+    </div>
+  
+    
     </div>
 
+</div>
 {% endblock body %}

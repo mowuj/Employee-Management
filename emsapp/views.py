@@ -1,37 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
 from django.contrib import messages
 # from django.contrib.auth.decorators import login_require
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout,update_session_auth_hash
 from .forms import *
 from .filters import *
 from django.db.models import Sum, Q
 import datetime
 from datetime import date
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
-def home(request):
-    employee=Employee.objects.all()
-    dept=Department.objects.all()
-    post=Post.objects.all()
-    leave=Leave.objects.filter(end_date__gte =datetime.date.today())
-    do_task=DailyTask.objects.filter(do_status=True)
-    working_task=DailyTask.objects.filter(working_status=True)
-    done_task=DailyTask.objects.filter(done_status=True)
-
-    meeting=Meeting.objects.filter(meeting_date=datetime.datetime.now())
-    client=Client.objects.all()
-    attend=Attendance.objects.filter(datetime__date=datetime.datetime.now())
-    context={'employee':employee,
-            'dept':dept,'post':post,
-            'leave':leave,
-            'do_task':do_task,
-            'working_task':working_task,
-            'done_task': done_task,
-            'meeting':meeting,
-            'client':client,'attend':attend}
-    return render(request, 'home.html',context)
 
 def create_user(request):
     if request.method == 'POST':
@@ -40,12 +22,21 @@ def create_user(request):
         if fm.is_valid() and form.is_valid():
             user = fm.save()
             user.set_password(user.password)
-
             user_form = form.save(commit=False)
             user_form.user = user
-           
             user_form.save()
-            messages.success(request, 'Account Created !')
+            current_site=get_current_site(request)
+            mail_subject='An account Created'
+            message=render_to_string('account.html',{
+                'user':user_form,
+                'domain':current_site.domain
+
+            })
+            send_mail=form.cleaned_data.get('email')
+            email=EmailMessage(mail_subject,message,to=[send_mail])
+            email.send()
+            print('send')
+            messages.success(request, 'Successfully Account Created !')
             return redirect('/all-employee')
     else:
         fm = SignUpForm()
@@ -72,9 +63,43 @@ def user_login(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+def change_password(request):
+    if request.method=="POST":
+        form=PasswordChangeForm(data=request.POST,user=request.user)
+        if form.is_valid():
+            update_session_auth_hash(request,form.user)
+            messages.success(request,'Password has successfully Changed')
+            return redirect('home')
+    else:
+        form=PasswordChangeForm(user=request.user)
+    return render(request,'change-password.html',{'form':form})
+
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def home(request):
+    employee=Employee.objects.all()
+    dept=Department.objects.all()
+    post=Post.objects.all()
+    leave=Leave.objects.filter(end_date__gte =datetime.date.today())
+    do_task=DailyTask.objects.filter(do_status=True)
+    working_task=DailyTask.objects.filter(working_status=True)
+    done_task=DailyTask.objects.filter(done_status=True)
+
+    meeting=Meeting.objects.filter(meeting_date=datetime.datetime.now())
+    client=Client.objects.all()
+    attend=Attendance.objects.filter(datetime__date=datetime.datetime.now())
+    context={'employee':employee,
+            'dept':dept,'post':post,
+            'leave':leave,
+            'do_task':do_task,
+            'working_task':working_task,
+            'done_task': done_task,
+            'meeting':meeting,
+            'client':client,'attend':attend}
+    return render(request, 'home.html',context)
+
 
 def department(request):
     all_dept=Department.objects.all()
@@ -308,7 +333,7 @@ def create_meeting(request):
     return render(request,'create-meeting.html',context)
 
 def today_meeting(request):
-    meeting = Meeting.objects.filter(meeting_date=datetime.datetime.now())
+    meeting = Meeting.objects.filter(meeting_date=datetime.datetime.today())
     context={'meeting':meeting}
     return render (request,'meeting.html',context)
 
