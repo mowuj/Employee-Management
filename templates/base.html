@@ -124,13 +124,34 @@
                                     <i class="nav-icon icon-puzzle"></i> Attendance Report</a>
                             </li>
                             {% endif %}
-                            
-                            
-                            
-                            
+
                             
                         </ul>
                     </li>
+                    <li class="nav-item nav-dropdown">
+                        <a class="nav-link nav-dropdown-toggle" href="#">
+                            <i class="nav-icon icon-user"></i> Department</a>
+                        <ul class="nav-dropdown-items">
+                    
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'department' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Departments</a>
+                            </li>
+                            {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'add-department' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Add Department</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" href="">
+                                    <i class="nav-icon icon-puzzle"></i> Edit Department</a>
+                            </li> -->
+                            {% endif %}
+                    
+                    
+                        </ul>
+                    </li>
+
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon icon-user"></i> Client</a>

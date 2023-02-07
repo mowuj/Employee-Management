@@ -10,14 +10,17 @@ User=get_user_model()
 
 class Department(models.Model):
     name = models.CharField(max_length=150)
-    
+    manager=models.CharField(max_length=150,blank=True, null=True )
+    start_date=models.DateField(blank=True, null=True)
+    image=models.ImageField(
+        default='default.jpg', upload_to='media/images', blank=True)
     def __str__(self):
         return self.name
 
 
 class Post(models.Model):
     name = models.CharField(max_length=150)
-        
+    salary=models.IntegerField(blank=True, null=True)
     def __str__(self):
         return self.name
 
@@ -45,7 +48,7 @@ class Employee(models.Model):
     district = models.ForeignKey(
         District, on_delete=models.CASCADE, default='', blank=True, null=True, related_name='district_set')
     post = models.ForeignKey(Post, on_delete=models.CASCADE,
-                             blank=True, null=True, related_name='post_set', default='')
+                            blank=True, null=True, related_name='post_set', default='')
     employee_id = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=150, blank=True, null=True)
     ssc = models.FloatField(blank=True, null=True)

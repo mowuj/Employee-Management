@@ -70,11 +70,24 @@ class EmployeeForm(ModelForm):
         'employee_id',
         'post',
         'department']
-        # widgets={
-        #         'email': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2', 'placeholder': 'Enter Email'}),
-            
-        # }
-        # exclude=("username",)
+
+class DepartmentAddForm(ModelForm):
+    class Meta:
+        model=Department
+        fields=[
+            'name',
+            'manager',
+            'start_date',
+            'image'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
+                                            'placeholder': 'Enter Department Name..','label':'Department Name'}),
+            'manager': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
+                                            'placeholder': 'Enter Manager Name..','label':'Manager Name'}),
+            'start_date': forms.DateInput(format=('%d/%m/%y'), attrs={'class': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
+            "image":forms.ClearableFileInput(attrs={"class":"form-control bg-light badge-pill p-2 m-2"})
+        }
 
 class TaskForm(ModelForm):
     class Meta:

@@ -9,7 +9,9 @@ urlpatterns = [
     path('signup', create_user, name='signup'),
     path('logout', user_logout, name='logout'),
     path('add-employee', add_employee, name='add-employee'),
-
+    path('department',department,name='department'),
+    path('add-department',add_department,name='add-department'),
+    path('edit-department/<int:id>',edit_department,name='edit-department'),
     path('all-employee', all_employee, name='all-employee'),
     path('delete/<int:id>', delete, name='delete'),
     path('detail/<int:id>', employee_detail, name='detail'),

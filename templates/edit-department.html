@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>Edit Department</title>
+{% endblock title %}
+{% block body %}
+<div class="row d-flex justify-content-center mt-2">
+    <div class="col-md-6 mt-2 mb-2 ">
+        <h4 class="bg-primary text-center text-light badge-pill p-3">Edit Department</h4>
+    </div>
+</div>
+<div class="row d-flex justify-content-center mt-0">
+<div class="col-md-6 m-auto">
+        {% if form %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            {% endif %}
+            <div class=" d-flex align-center justify-content-center my-3">
+                <button type="submit" class="btn btn-info badge-pill mx-2">Submit</button>
+                
+            </div>
+        </form>
+    </div>
+{% endblock body %}

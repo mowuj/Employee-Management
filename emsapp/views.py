@@ -76,6 +76,37 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+def department(request):
+    all_dept=Department.objects.all()
+    return render(request,'department.html',{'all_dept':all_dept})
+
+def add_department(request):
+    form=DepartmentAddForm()
+    if request.method=='POST':
+        form=DepartmentAddForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            context={'form':form}
+            return redirect('department')
+    form = DepartmentAddForm()
+    context = {'form': form}
+    return render(request, 'add_department.html', context)
+
+def edit_department(request,id):
+    department = Department.objects.get(id=id)
+    form = DepartmentAddForm(instance=department)
+    if request.method == 'POST':
+        form = DepartmentAddForm(request.POST, request.FILES,instance=department)
+        if form.is_valid():
+            form.save()
+            return redirect('department')
+    context = {'form': form}
+    return render(request, 'edit-department.html', context)
+
+def post(request):
+    all_post=Post.objects.all()
+    return render(request,'post.html',{'all_post':all_post})
+
 def add_employee(request):
     form = EmployeeAddForm()
     if request.method == 'POST':
