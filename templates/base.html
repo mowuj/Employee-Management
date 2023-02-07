@@ -21,7 +21,7 @@
     <!-- Icons -->
     <link href="{% static 'dist/vendors/css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'dist/vendors/css/simple-line-icons.min.css' %}" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <!-- Main styles for this application -->
     <link href="{% static 'dist/css/style.css' %}" rel="stylesheet">
 
@@ -99,7 +99,7 @@
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href=""><i class="icon-speedometer"></i> Dashboard</a>
+                        <a class="nav-link" href="{% url 'home' %}"><i class="icon-speedometer"></i> Dashboard</a>
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
@@ -107,32 +107,40 @@
                         <ul class="nav-dropdown-items">
                             
                             <li class="nav-item">
+                                <a class="nav-link" href="{% url 'attendance' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Attendance</a>
+                            </li>
+                            {% if user.is_superuser %}
+                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'all-employee' %}">
                                     <i class="nav-icon icon-puzzle"></i> Employee List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'attendance' %}">
-                                    <i class="nav-icon icon-puzzle"></i> Attendance</a>
+                                <a class="nav-link" href="{% url 'signup' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Add Employee</a>
                             </li>
-                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'report' %}">
                                     <i class="nav-icon icon-puzzle"></i> Attendance Report</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'signup' %}">
-                                    <i class="nav-icon icon-puzzle"></i> Registration</a>
-                            </li>
+                            {% endif %}
+                            
+                            
+                            
+                            
+                            
                         </ul>
                     </li>
                     <li class="nav-item nav-dropdown">
                         <a class="nav-link nav-dropdown-toggle" href="#">
                             <i class="nav-icon icon-user"></i> Client</a>
                         <ul class="nav-dropdown-items">
+                            {% if user.is_superuser %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'client' %}">
                                     <i class="nav-icon icon-puzzle"></i> Client List</a>
                             </li>
+                            {% endif %}
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'add-client' %}">
@@ -164,10 +172,16 @@
                                 <a class="nav-link" href="{% url 'leave-application' %}">
                                     <i class="nav-icon icon-puzzle"></i> Leave Form</a>
                             </li>
+                            {% if user.is_superuser %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'new-application' %}">
                                     <i class="nav-icon icon-puzzle"></i> New Application</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'today-leave' %}">
+                                    <i class="nav-icon icon-puzzle"></i> Today Leaves</a>
+                            </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'my-leave' %}">
                                     <i class="nav-icon icon-puzzle"></i> My Application</a>
@@ -254,21 +268,19 @@
                         <small><b>Todays Meeting</b></small>
                     </div>
                     
+                    {% for i in meeting_list %}
                     <hr class="transparent mx-3 my-0">
                     <div class="callout callout-warning m-0 py-3">
                         <div class="avatar float-right">
-
                         </div>
-
-
 
                         <div>Meeting with
-                            <strong></strong>
+                            <strong>{{i.count}}</strong>
                         </div>
-                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; </small>
-                        <small class="text-muted"><i class="icon-calendar"></i>&nbsp; </small>
+                        <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; {{i.meeting_time}}</small>
+                        <small class="text-muted"><i class="icon-calendar"></i>&nbsp; {{i.meeting_date}}</small>
                     </div>
-                    
+                    {% endfor %}
 
                 </div>
 

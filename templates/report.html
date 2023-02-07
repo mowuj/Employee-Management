@@ -10,11 +10,20 @@
     }
 </style>
 <div class="row mb-2 mt-4">
-    <div class="col-md-4 m-auto badge-info text-center p-2 badge-pill ">
+    <div class="col-md-4 mx-auto badge-info text-center p-2 badge-pill ">
         <h4>Attendance Report</h4>
+        
     </div>
+    <!-- <form action="" class="col-md-12 mb-2 card card-body ">
+        <div class="text-center">
+            {{attendfilter.form}}
+            <button type="submit" class="btn btn-primary badge-pill">Search</button>
+    
+        </div>
+    </form> -->
 </div>
-<div class="col-md-6">
+    {% if attend %}
+<div class="col-md-6 mx-auto">
     <table class="table table-dark table-hover">
         <thead>
             <tr>
@@ -35,4 +44,7 @@
         </tbody>
     </table>
 </div>
+{% else %}
+<h4 class="text-muted text-center">No Attendance yet!</h4>
+{% endif %}
 {% endblock body %}

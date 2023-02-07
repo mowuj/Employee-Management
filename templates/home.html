@@ -2,10 +2,131 @@
 {% extends "base.html" %}
 {% block body %}
 <div class="container">
-    {% if chart %}
-    <img src="data:image/png:base64,{{chart|safe}}" alt="">
-    {% endif %}
+    
+    <div class="row">
+        <div class="col-md-12">
+            {% if user.is_superuser %}
+            <h2 class="text-center mt-3">Admin Dashboard</h2>
+            <hr>
+            <!-- grid card  -->
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card text-center " >
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Total Employee</h3>
+                            <h3 class="card-text">{{employee.count}}</h3>
+                            <a href="{% url 'all-employee' %}" class="btn btn-primary ">Employee List</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Today Attendance</h3>
+                            <h3 class="card-text">{{attend.count}}</h3>
+                            <a href="{% url 'report' %}" class="btn btn-primary">Attendance Sheet</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Today Leaves</h3>
+                            <h3 class="card-text">{{leave.count}}</h3>
+                            <a href="" class="btn btn-primary">Leave Report</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Today Meeting</h3>
+                            <h3 class="card-text">{{meeting.count}}</h3>
+                            <a href="{% url 'meeting' %}" class="btn btn-primary">Meeting Sheet</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title"> Clients Counts</h3>
+                            <h3 class="card-text">{{client.count}}</h3>
+                            <a href="{% url 'client' %}" class="btn btn-primary">Client Sheet</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Departments</h3>
+                            <h3 class="card-text">{{dept.count}}</h3>
+                            <a href="#" class="btn btn-primary">Departments</a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Posts</h3>
+                            <h3 class="card-text">{{post.count}}</h3>
+                            <a href="#" class="btn btn-primary">Posts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Do Task</h3>
+                            <h3 class="card-text">{{do_task.count}}</h3>
+                            <a href="{% url 'daily-task' %}" class="btn btn-primary">Task Sheet</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Working Task</h3>
+                            <h3 class="card-text">{{working_task.count}}</h3>
+                            <a href="{% url 'daily-task' %}" class="btn btn-primary">Task Sheet</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center">
+            
+                        <div class="card-body">
+                            <h3 class="card-title">Done Task</h3>
+                            <h3 class="card-text">{{done_task.count}}</h3>
+                            <a href="{% url 'daily-task' %}" class="btn btn-primary">Task Sheet</a>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            {% else %}
+            <h2 class="text-center mt-3">This is Employee Dashboard</h2>
+            <hr>
+            {% endif %}
+            
+            <!-- <div class="cards d-flex"> -->
 
+
+                
+            <!-- </div> -->
+        </div>
+    </div>
 </div>
 {% endblock body %}
     

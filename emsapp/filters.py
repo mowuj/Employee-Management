@@ -27,3 +27,11 @@ class ClientFilter(django_filters.FilterSet):
             'email',
             'phone'
         ]
+class AttendFilter(django_filters.FilterSet):
+    
+    class Meta:
+        model=Attendance
+        fields=['attender',"datetime"]
+        
+    
+        

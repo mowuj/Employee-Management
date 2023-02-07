@@ -1,15 +1,22 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}
 <title>Add</title>
 {% endblock title %}
 
 {% block body %}
 <div class="container h-100">
+    <div class="col-md-4 mx-auto badge-info text-center p-2 badge-pill ">
+        <h4>Employee Add Form</h4>
+    
+    </div>
+    <hr>
     {%if msg%}
     <div class="alert alert-danger" role="alert">
         <h4>{{msg}}</h4>
     </div>
     {% endif %}
+    
     <div class="d-flex justify-content-center h-100">
 
         <div class="card" style="width: 24rem;">
@@ -27,12 +34,20 @@
                     <span class="input-group-text" id="basic-addon1"></span>
                     <input type="email" class="form-control" placeholder="Enter Email" aria-label="email" id="email"
                         aria-describedby="basic-addon1">
-                </div><label for="employee_id" class="form-label">Employee Id</label>
+                </div>
+                <label for="employee_id" class="form-label">Employee Id</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1"></span>
                     <input type="text" class="form-control" placeholder="Enter Employee Id" aria-label="employee_id" id="employee_id"
                         aria-describedby="basic-addon1" name="employee_id">
                 </div>
+                <label for="post" class="form-label">Employee Post</label>
+                {{form.post}}
+                
+                <br>
+                <label for="department" class="form-label">Department</label>
+                {{form.department}} <br>
+                
                 <label for="password1" class="form-label">Password</label>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1"></span>

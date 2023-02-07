@@ -13,14 +13,67 @@ class SignUpForm(UserCreationForm):
 class EmployeeAddForm(ModelForm):
     class Meta:
         model=Employee
-        fields="__all__"
-        # exclude=("username",)
-
+        fields=[
+            'name',
+            'email',
+            'phone',
+            'nid',
+            'ssc',
+            'hsc',
+            'honors',
+            'masters',
+            'salary',
+            'father_name',
+            'mother_name',
+            'district',
+            'image',
+            
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Your Name'}),
+            'email': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Your Email'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Your Phone'}), 
+            'nid': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Nid no'}), 
+            'ssc': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter SSC Result'}),
+            'hsc': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter HSC Result'}),
+            'honors': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Honors Result'}),
+            'masters': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Masters Result'}),
+            'salary': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Salary'}),
+            'father_name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Your Father Name'}),
+            'mother_name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2',
+                                            'placeholder': 'Enter Your Mother Name'}),
+            'district': forms.Select(attrs={'class': 'form-control bg-light badge-pill p-2',
+                                            'placeholder': 'Enter Your District'}),
+            # 'image': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
+            #                                 'placeholder': 'Enter Your Image'}),
+            "image":forms.ClearableFileInput(attrs={"class":"form-control bg-light badge-pill p-2 m-2"}),
+        }
+       
 
 class EmployeeForm(ModelForm):
+    post=forms.Select(attrs={
+            "class":"form-control"
+            })
     class Meta:
         model = Employee
-        fields = ['email','employee_id']
+        fields = ['email',
+        'employee_id',
+        'post',
+        'department']
+        # widgets={
+        #         'email': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2', 'placeholder': 'Enter Email'}),
+            
+        # }
         # exclude=("username",)
 
 class TaskForm(ModelForm):
@@ -36,7 +89,7 @@ class TaskForm(ModelForm):
                                             'placeholder': 'Enter Your Task Title'}),
 
             'description': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2',
-                                                  'placeholder': 'Enter Your Task Description '}),
+                                                'placeholder': 'Enter Your Task Description '}),
             'delivery': forms.DateInput(format=('%d/%m/%y'), attrs={'class': 'form-control bg-light badge-pill p-2', 'type': 'date'}),
 
         }
@@ -77,4 +130,17 @@ class MeetingForm(ModelForm):
 class ClientForm(ModelForm):
     class Meta:
         model=Client
-        fields='__all__'
+        fields=[
+            'client_name',
+            'client_id',
+            'email',
+            'phone',
+            'company_name'
+        ]
+        widgets={
+            'client_name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2', 'placeholder': 'Client Name...'}),
+            'client_id': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2', 'placeholder': 'Client Id...'}),
+            'email': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2', 'placeholder': 'Client email...'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2', 'placeholder': 'Client Phone...'}),
+            'company_name': forms.TextInput(attrs={'class': 'form-control bg-light badge-pill p-2 m-2', 'placeholder': 'Company Name...'}),
+        }

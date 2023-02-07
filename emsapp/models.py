@@ -106,17 +106,15 @@ class DailyTask(models.Model):
         auto_now_add=False, blank=True, null=True)
 
     def __str__(self):
-        return f"str(self.user) and str(self.title)"
+        return str(self.user) +" " + str(self.title)
 
 
 class Meeting(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     person_with = models.CharField(max_length=150,blank=True, null=True)
-    meeting_date = models.DateTimeField(
-        auto_now=False, auto_now_add=False, blank=True, null=True)
-    meeting_time = models.TimeField(
-        auto_now=False, auto_now_add=False, blank=True, null=True)
+    meeting_date = models.DateField(blank=True, null=True)
+    meeting_time = models.TimeField(blank=True, null=True)
     def __str__(self):
         return str(self.user)
 
@@ -138,3 +136,7 @@ class Attendance(models.Model):
 
     def __str__(self):
         return str(self.attender.username) + " " + str(self.datetime)[:19]
+    
+class SalesData(models.Model):
+    sales=models.IntegerField(blank=True, null=True)
+    month=models.CharField(max_length=150)

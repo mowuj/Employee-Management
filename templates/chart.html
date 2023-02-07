@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}
+{% block body %}
+
+
+
+{% load chartit %}
+
+<h1>Sales Chart</h1>
+
+{% render_chart chart_object "chart_id" %}
+{% endblock body %}

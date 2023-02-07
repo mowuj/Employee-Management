@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'emsapp',
     'crispy_forms',
     'django_filters',
-    'matplotlib'
+    'matplotlib',
+    
 ]
 
 MIDDLEWARE = [

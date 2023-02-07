@@ -11,24 +11,42 @@ from django.db.models import Sum, Q
 import datetime
 from datetime import date
 
-import holidays
-
 def home(request):
-    return render(request, 'home.html')
+    employee=Employee.objects.all()
+    dept=Department.objects.all()
+    post=Post.objects.all()
+    leave=Leave.objects.filter(end_date__gte =datetime.date.today())
+    do_task=DailyTask.objects.filter(do_status=True)
+    working_task=DailyTask.objects.filter(working_status=True)
+    done_task=DailyTask.objects.filter(done_status=True)
+
+    meeting=Meeting.objects.filter(meeting_date=datetime.datetime.now())
+    client=Client.objects.all()
+    attend=Attendance.objects.filter(datetime__date=datetime.datetime.now())
+    context={'employee':employee,
+            'dept':dept,'post':post,
+            'leave':leave,
+            'do_task':do_task,
+            'working_task':working_task,
+            'done_task': done_task,
+            'meeting':meeting,
+            'client':client,'attend':attend}
+    return render(request, 'home.html',context)
 
 def create_user(request):
     if request.method == 'POST':
         fm = SignUpForm(data=request.POST)
         form = EmployeeForm(data=request.POST)
         if fm.is_valid() and form.is_valid():
-           user = fm.save()
-           user.set_password(user.password)
+            user = fm.save()
+            user.set_password(user.password)
 
-           user_form = form.save(commit=False)
-           user_form.user = user
+            user_form = form.save(commit=False)
+            user_form.user = user
            
-           user_form.save()
-           messages.success(request, 'Account Created !')
+            user_form.save()
+            messages.success(request, 'Account Created !')
+            return redirect('/all-employee')
     else:
         fm = SignUpForm()
         form = EmployeeForm()
@@ -87,9 +105,9 @@ def employee_detail(request, id):
 
 def profile(request):
     profile = Employee.objects.get(user=request.user)
-    # department = profile.department
-    # dept = Employee.objects.filter(department=department)
-    context = {'profile': profile, }
+    department = profile.department
+    dept = Employee.objects.filter(department=department)
+    context = {'profile': profile,'dept':dept }
     return render(request, 'profile.html', context)
 
 
@@ -229,6 +247,11 @@ def my_leave(request):
     }
     return render(request,'my-application.html',context)
 
+def today_leave(request):
+    today_leave = Leave.objects.filter(approve_status=True,end_date__gte =datetime.date.today())
+    print(today_leave)
+    return render(request,'today-leave.html',{'today_leave':today_leave})
+
 def holiday(request):
     bd_holidays = holidays.Bangladesh()
 
@@ -245,7 +268,7 @@ def create_meeting(request):
             form=form.save(commit=False)
             form.user=request.user
             form=form.save()
-            msg='Meeting Shedule Added'
+            msg='Meeting Schedule Added'
             form=MeetingForm()
             context={'form':form,'msg':msg}
             return render(request,'create-meeting.html',context)
@@ -321,4 +344,7 @@ def attendance_view(request):
 def attendance_report(request):
     attend=Attendance.objects.filter(datetime__date=datetime.datetime.today())
     print(attend)
+    # all_attend = Attendance.objects.all()
+    # attendfilter = AttendFilter(request.GET, queryset=all_attend)
+    # all_attend = attendfilter.qs
     return render(request,'report.html',{'attend':attend})

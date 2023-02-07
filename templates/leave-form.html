@@ -6,17 +6,17 @@
 {% block body %}
 {% load crispy_forms_tags %}
 <div class="container mt-5">
+    {% if msg %}
+    <h5 class="bg-success text-white p-2 m-3 badge-pill">{{msg}}</h5>
+    {% endif %}
     <div class="m-auto col-md-4">
-        {% if msg %}
-        <h5 class="bg-success text-white p-2 m-3 badge-pill">{{msg}}</h5>
-        {% endif %}
-        <h3 class="bg-secondary text-light text-center badge-pill p-2 mb-3">leave Form</h3>
+        
+        <h3 class="bg-primary text-light text-center badge-pill p-2 mb-3">leave Form</h3>
         <form action="" method="post">
             {%csrf_token%}
             {{form| crispy}}
-            <button type="submit" class="btn btn-outline-success badge-pill">Submit</button>
-            <a href="{% url 'home' %}"> <button type="button" class="btn btn-outline-secondary badge-pill">Go To
-                    Home</button></a>
+            <button type="submit" class="btn btn-info badge-pill">Submit</button>
+            <a href="{% url 'home' %}"> <button type="button" class="btn btn-success badge-pill">Go To Home</button></a>
         </form>
     </div>
 </div>
