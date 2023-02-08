@@ -124,4 +124,4 @@ EMAIL_HOST_PASSWORD = 'uwvnlzgjzysuqody'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ALLOWED_HOSTS=['mowuj.pythonanywhere.com']
+ALLOWED_HOSTS=['.vercel.app']
